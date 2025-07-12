@@ -1,0 +1,215 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffe6f0;
+  color: #ff3385;
+  transition: opacity 1.5s ease;
+  overflow-x: hidden;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInBody 2s forwards;
+}
+
+@keyframes fadeInBody {
+  to { opacity: 1; }
+}
+
+h1, h2 {
+  text-align: center;
+  margin-top: 20px;
+}
+
+section {
+  padding: 60px 20px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Countdown Section */
+.countdown-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 2rem;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.countdown-grid div {
+  background: #ffccdd;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(255, 105, 180, 0.4);
+  transition: all 0.5s ease;
+}
+
+/* Traits */
+.traits-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.traits-container div {
+  background: #ffd6e7;
+  padding: 15px;
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(255, 105, 180, 0.2);
+  transition: transform 0.3s;
+}
+.traits-container div:hover {
+  transform: scale(1.05);
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.popup.hidden {
+  display: none;
+}
+.popup-content {
+  background: #fff0f5;
+  color: #d63384;
+  padding: 30px;
+  border-radius: 20px;
+  width: 300px;
+  animation: popIn 0.4s ease;
+  text-align: center;
+}
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+#popup-close {
+  float: right;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.popup-image-wrapper {
+  margin-top: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+}
+.popup-image {
+  width: 100%;
+  border-radius: 12px;
+}
+
+/* Gallery */
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+.gallery-container img {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+.gallery-container img:hover {
+  transform: scale(1.03);
+}
+
+/* Birthday Cards */
+.birthday-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.birthday-card {
+  background: #fff0f5;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(255, 105, 180, 0.2);
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+.birthday-card:hover {
+  transform: translateY(-5px);
+}
+
+.birthday-card h3 {
+  color: #d63384;
+  margin-bottom: 10px;
+}
+
+.birthday-card p {
+  margin: 4px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Ending */
+.ending {
+  text-align: center;
+  background: #ffccdd;
+  font-size: 1.4rem;
+  padding: 60px 20px;
+  animation: fadeIn 2s ease;
+}
+
+/* Secret Button */
+.secret-button {
+  display: block;
+  margin: 40px auto 80px;
+  padding: 12px 30px;
+  background: #ff66a3;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.secret-button:hover {
+  background: #e05592;
+}
+
+/* Blur Image Container (Reusable Class) */
+.image-container, .blurred-box {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(255, 105, 180, 0.3);
+  margin: 10px auto;
+  max-width: 90%;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    font-size: 1.4rem;
+  }
+  .countdown-grid {
+    font-size: 1.2rem;
+  }
+}

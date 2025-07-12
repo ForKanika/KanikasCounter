@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Proposal</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffcee8, #ff66a3);
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      color: #fff;
+    }
+
+    /* Images gallery container */
+    .images-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      width: 100%;
+      padding: 10px 0;
+      z-index: 10;
+    }
+
+    /* Image container with blur and smooth corners */
+    .image-container {
+      background: rgba(255 255 255 / 0.2);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(255 102 163, 0.25);
+      transition: transform 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .image-container img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+    .image-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 45px rgba(255 102 163, 0.45);
+    }
+
+    /* Proposal container separate */
+    .proposal-container {
+      background: rgba(255 255 255 / 0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 25px;
+      box-shadow: 0 8px 32px rgb(255 102 163 / 0.3);
+      padding: 30px 40px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      animation: breathe 4s ease-in-out infinite;
+      user-select: none;
+      z-index: 10;
+      position: relative;
+    }
+
+    /* Breathing animation */
+    @keyframes breathe {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 32px rgba(255, 102, 163, 0.3);
+      }
+      50% {
+        transform: scale(1.03);
+        box-shadow: 0 12px 45px rgba(255, 102, 163, 0.5);
+      }
+    }
+
+    /* Letter text styling */
+    .letter-text {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      user-select: text;
+      color: #fff;
+    }
+
+    /* Proposal buttons container */
+    .proposal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
+    /* Proposal buttons styles */
+    .proposal-btn {
+      background: #ff66a3;
+      border: none;
+      border-radius: 30px;
+      padding: 15px 50px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(255, 102, 163, 0.6);
+      transition: all 0.3s ease;
+      user-select: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-width: 120px;
+    }
+    .proposal-btn:hover {
+      background: #e05592;
+      box-shadow: 0 10px 30px rgba(224, 85, 146, 0.8);
+      transform: translateY(-3px) scale(1.05);
+    }
+    .proposal-btn:active {
+      transform: translateY(1px) scale(1);
+      box-shadow: 0 5px 15px rgba(224, 85, 146, 0.7);
+    }
+
+    /* Back to Main Page button */
+    .back-btn {
+      display: inline-block;
+      background: transparent;
+      border: 3px solid white;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.35s ease;
+      user-select: none;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(255 255 255 / 0.5);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-top: 20px;
+    }
+    .back-btn:hover {
+      background: white;
+      color: #ff66a3;
+      box-shadow: 0 6px 25px rgba(255 102 163, 0.8);
+      transform: scale(1.05);
+    }
+    .back-btn:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 12px rgba(255 102 163, 0.7);
+    }
+
+    /* Canvas for confetti */
+    #proposal-confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      width: 100vw;
+      height: 100vh;
+      z-index: 5;
+    }
+
+    /* Floating hearts animation */
+    .heart {
+      position: fixed;
+      bottom: 30px;
+      font-size: 1.8rem;
+      color: #ff3385;
+      opacity: 0.8;
+      animation-name: floatUp;
+      animation-timing-function: ease-in;
+      animation-iteration-count: infinite;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 0.8;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-200px) scale(1.3);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .proposal-buttons {
+        flex-direction: column;
+        gap: 20px;
+      }
+      .proposal-btn {
+        width: 100%;
+        padding: 14px 0;
+        font-size: 1.3rem;
+      }
+      .proposal-container {
+        padding: 20px 25px;
+      }
+      .images-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Images Gallery -->
+  <section class="images-gallery" aria-label="Kanika Images Gallery">
+    <!-- Repeat these blocks for 10-20 images -->
+    <div class="image-container">
+      <img src="images/img1.jpg" alt="Kanika smiling 1" />
+    </div>
+    <div class="image-container">
+      <img src="images/img2.jpg" alt="Kanika smiling 2" />
+    </div>
+    <div class="image-container">
+      <img src="images/img3.jpg" alt="Kanika at the beach" />
+    </div>
+    <div class="image-container">
+      <img src="images/img4.jpg" alt="Kanika laughing" />
+    </div>
+    <div class="image-container">
+      <img src="images/img5.jpg" alt="Kanika with friends" />
+    </div>
+    <div class="image-container">
+      <img src="images/img6.jpg" alt="Kanika reading" />
+    </div>
+    <div class="image-container">
+      <img src="images/img7.jpg" alt="Kanika at sunset" />
+    </div>
+    <div class="image-container">
+      <img src="images/img8.jpg" alt="Kanika in nature" />
+    </div>
+    <div class="image-container">
+      <img src="images/img9.jpg" alt="Kanika smiling 3" />
+    </div>
+    <div class="image-container">
+      <img src="images/img10.jpg" alt="Kanika candid photo" />
+    </div>
+    <!-- Add more as needed -->
+  </section>
+
+  <!-- Proposal Section -->
+  <section class="proposal-container" aria-label="Proposal Letter and Options">
+    <div class="letter-text" aria-live="polite">
+      Hey Kanika, this website is just for you. I hope you like it. I love you 😊<br />
+    </div>
+    <h2>shadi kroge?</h2>
+
+    <div class="proposal-buttons" role="group" aria-label="Proposal options">
+      <button id="yesBtn" class="proposal-btn" aria-pressed="false" aria-label="Yes, I accept">हाँ</button>
+      <button id="noBtn" class="proposal-btn" aria-pressed="false" aria-label="No, I don't accept">नहीं</button>
+    </div>
+
+    <a href="index.html" class="back-btn" role="button" aria-label="Back to main page">Back to Main Page</a>
+    <p id="proposal-msg" style="margin-top: 1rem; font-weight: 600; font-size: 1.15rem; color:#fff;"></p>
+  </section>
+
+  <canvas id="proposal-confetti" aria-hidden="true"></canvas>
+
+  <!-- Big I LOVE YOU text -->
+  <div class="big-love-text" aria-label="I love you">I LOVE YOU ❤️</div>
+
+  <!-- Floating hearts script -->
+  <script>
+    // Create floating hearts continuously
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.textContent = "❤️";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      heart.style.fontSize = (16 + Math.random() * 16) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 400);
+  </script>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const msg = document.getElementById("proposal-msg");
+    const canvas = document.getElementById("proposal-confetti");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let confetti = [];
+    for (let i = 0; i < 150; i++) {
+      confetti.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        r: Math.random() * 6 + 4,
+        d: Math.random() * 100 + 10,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        tilt: Math.random() * 10 - 10,
+        tiltAngle: 0,
+      });
+    }
+
+    let animationFrameId;
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let p of confetti) {
+        ctx.beginPath();
+        ctx.fillStyle = p.color;
+        ctx.ellipse(p.x, p.y, p.r, p.r / 2, p.tilt, 0, 2 * Math.PI);
+        ctx.fill();
+      }
+      updateConfetti();
+      animationFrameId = requestAnimationFrame(drawConfetti);
+    }
+
+    function updateConfetti() {
+      for (let p of confetti) {
+        p.y += 2;
+        p.tiltAngle += 0.1;
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function startConfetti() {
+      if (!animationFrameId) {
+        drawConfetti();
+      }
+    }
+
+    function stopConfetti() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    function showThanks() {
+      msg.textContent = "Thanks for accepting! ❤️";
+      startConfetti();
+      yesBtn.disabled = true;
+      noBtn.disabled = true;
+
+      // Stop confetti after 10 seconds
+      setTimeout(() => {
+        stopConfetti();
+      }, 10000);
+    }
+
+    yesBtn.onclick = showThanks;
+
+    noBtn.onclick = () => {
+      noBtn.textContent = "हाँ";
+      noBtn.style.background = "#ff66a3";
+      noBtn.style.boxShadow = "0 6px 20px rgba(255, 102, 163, 0.6)";
+      noBtn.disabled = true; // Disable immediately after click
+      showThanks();
+    };
+
+    // Resize canvas on window resize
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
